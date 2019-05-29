@@ -40,7 +40,7 @@ namespace RLLog2
             if (!String.IsNullOrEmpty(Format))
             {
                 return Format
-                    .Replace("%date", DateTime.Now.ToString())
+                    .Replace("%date", $"{DateTime.Now.Year.ToString("D4")}-{DateTime.Now.Month.ToString("D2")}-{DateTime.Now.Day.ToString("D2")} {DateTime.Now.Hour.ToString("D2")}:{DateTime.Now.Minute.ToString("D2")}:{DateTime.Now.Second.ToString("D2")}")
                     .Replace("%thread", System.Threading.Thread.CurrentThread.ManagedThreadId.ToString())
                     .Replace("%level", level)
                     .Replace("%class", methodBase.DeclaringType.ToString())
