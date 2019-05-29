@@ -13,6 +13,15 @@ namespace RLLog
         ConsoleLogger = 1,
         FileLogger = 2,
     }
+    
+    public enum LogLevel
+    {
+        Debug,
+        Info,
+        Warning,
+        Error,
+        Critical,
+    }
 
     public static class LogManager
     {
