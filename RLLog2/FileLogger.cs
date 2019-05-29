@@ -9,10 +9,9 @@ namespace RLLog2
     public class FileLogger : ILog
     {
         public string LogFilePath { get; set; }
-        public override string ClassPath { get; set; }
         public override string Format { get; set; }
 
-        private void CommonOut(LogLevel logLevel, string message)
+        private void CommonOut(LogLevel logLevel, string message, System.Reflection.MethodBase methodBase)
         {
             string level = "NULL";
             switch (logLevel)
@@ -36,7 +35,7 @@ namespace RLLog2
                     break;
             }
 
-            message = InternalFormat(level, Format, message);
+            message = InternalFormat(level, methodBase, message);
 
             lock (lockObj)
             {
@@ -47,25 +46,45 @@ namespace RLLog2
                 }
             }
         }
-        private void CommonOut(LogLevel logLevel, string message, Exception ex)
+        private void CommonOut(LogLevel logLevel, string message, System.Reflection.MethodBase methodBase, Exception ex)
         {
-            CommonOut(logLevel, $"{message} JSON:{LogManager.GetObjectDetailsJSON(ex)}");
+            CommonOut(logLevel, $"{message} JSON:{LogManager.GetObjectDetailsJSON(ex)}", methodBase);
         }
 
 
-        public override void Debug(string message) => CommonOut(LogLevel.Debug, message);
-        public override void Debug(string message, Exception ex) => CommonOut(LogLevel.Debug, message, ex);
+        /// <summary>
+        /// Logs a debug message
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Debug(string message) => CommonOut(LogLevel.Debug, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod());
+        public override void Debug(string message, Exception ex) => CommonOut(LogLevel.Debug, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod(), ex);
 
-        public override void Error(string message) => CommonOut(LogLevel.Error, message);
-        public override void Error(string message, Exception ex) => CommonOut(LogLevel.Error, message, ex);
+        /// <summary>
+        /// Logs an error message
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Error(string message) => CommonOut(LogLevel.Error, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod());
+        public override void Error(string message, Exception ex) => CommonOut(LogLevel.Error, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod(), ex);
 
-        public override void Fatal(string message) => CommonOut(LogLevel.Fatal, message);
-        public override void Fatal(string message, Exception ex) => CommonOut(LogLevel.Fatal, message, ex);
+        /// <summary>
+        /// Logs a fatal message
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Fatal(string message) => CommonOut(LogLevel.Fatal, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod());
+        public override void Fatal(string message, Exception ex) => CommonOut(LogLevel.Fatal, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod(), ex);
 
-        public override void Info(string message) => CommonOut(LogLevel.Info, message);
-        public override void Info(string message, Exception ex) => CommonOut(LogLevel.Info, message, ex);
+        /// <summary>
+        /// Logs an information message
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Info(string message) => CommonOut(LogLevel.Info, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod());
+        public override void Info(string message, Exception ex) => CommonOut(LogLevel.Info, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod(), ex);
 
-        public override void Warning(string message) => CommonOut(LogLevel.Warning, message);
-        public override void Warning(string message, Exception ex) => CommonOut(LogLevel.Warning, message, ex);
+        /// <summary>
+        /// Logs a warning
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Warning(string message) => CommonOut(LogLevel.Warning, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod());
+        public override void Warning(string message, Exception ex) => CommonOut(LogLevel.Warning, message, new System.Diagnostics.StackTrace().GetFrame(1).GetMethod(), ex);
     }
 }

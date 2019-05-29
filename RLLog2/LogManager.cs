@@ -72,15 +72,17 @@ namespace RLLog2
             return json;
         }
 
-        public static ILog GetLogger(Type declaringType)
+        public static ILog GetLogger()
         {
             string datestring = $"{DateTime.Now.Year.ToString("D4")}{DateTime.Now.Month.ToString("D2")}{DateTime.Now.Day.ToString("D2")}-{DateTime.Now.Hour.ToString("D2")}{DateTime.Now.Minute.ToString("D2")}";
 
             FileLogger fLog = new FileLogger();
-            fLog.ClassPath = declaringType.ToString();
-            fLog.Format = "%date %level [%thread] %logger - %message%newline";
-            fLog.LogFilePath = $"{Environment.CurrentDirectory}\\{datestring}.log";
-            
+            fLog.Format = "%date %level [%thread] %class.%method - %message";
+            fLog.LogFilePath = $"{Environment.CurrentDirectory}\\logs\\{datestring}.log";
+
+            if(!System.IO.Directory.Exists($"{Environment.CurrentDirectory}\\logs\\"))
+                System.IO.Directory.CreateDirectory($"{Environment.CurrentDirectory}\\logs\\");
+
             return fLog;
         }
     }

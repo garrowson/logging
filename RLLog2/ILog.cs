@@ -10,7 +10,6 @@ namespace RLLog2
     {
         protected readonly object lockObj = new object();
 
-        public abstract string ClassPath { get; set; }
         public abstract string Format { get; set; }
 
         public abstract void Debug(string message);
@@ -28,16 +27,27 @@ namespace RLLog2
         public abstract void Fatal(string message);
         public abstract void Fatal(string message, Exception ex);
 
-        public string InternalFormat(string level, string format, string message)
+        /// <summary>
+        /// Formats the message using the format provided by the 'Format' property
+        /// </summary>
+        /// <param name="level">Debuglevel</param>
+        /// <param name="methodBase">Methodbase of the calling method</param>
+        /// <param name="format"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public string InternalFormat(string level, System.Reflection.MethodBase methodBase, string message)
         {
             if (!String.IsNullOrEmpty(Format))
+            {
                 return Format
                     .Replace("%date", DateTime.Now.ToString())
                     .Replace("%thread", System.Threading.Thread.CurrentThread.ManagedThreadId.ToString())
                     .Replace("%level", level)
-                    .Replace("%logger", ClassPath)
+                    .Replace("%class", methodBase.DeclaringType.ToString())
+                    .Replace("%method", methodBase.Name)
                     .Replace("%message", message)
                     .Replace("%newline", Environment.NewLine);
+            }
             else
                 return $"(noFormat) {message}{Environment.NewLine}";
         }
