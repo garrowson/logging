@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RLLog2\RLLog2.csproj" />
     <ProjectReference Include="..\RLLog\RLLog.csproj" />
   </ItemGroup>
 
