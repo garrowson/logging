@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 
 namespace RLLog2
 {
+    /// <summary>
+    /// Interface for logging class
+    /// </summary>
     public abstract class ILog
     {
+#pragma warning disable CS1591 // Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element
         protected readonly object lockObj = new object();
-
         public abstract string Format { get; set; }
 
         public abstract void Debug(string message);
         public abstract void Debug(string message, Exception ex);
+
 
         public abstract void Info(string message);
         public abstract void Info(string message, Exception ex);
@@ -26,14 +30,14 @@ namespace RLLog2
 
         public abstract void Fatal(string message);
         public abstract void Fatal(string message, Exception ex);
+#pragma warning restore CS1591 // Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element
 
         /// <summary>
         /// Formats the message using the format provided by the 'Format' property
         /// </summary>
         /// <param name="level">Debuglevel</param>
         /// <param name="methodBase">Methodbase of the calling method</param>
-        /// <param name="format"></param>
-        /// <param name="message"></param>
+        /// <param name="message">The message to format</param>
         /// <returns></returns>
         public string InternalFormat(string level, System.Reflection.MethodBase methodBase, string message)
         {
