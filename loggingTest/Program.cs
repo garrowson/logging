@@ -6,7 +6,7 @@ namespace logging
     {
         //ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        static readonly RLLog2.ILog log = RLLog2.LogManager.GetLogger();
+        static readonly RLLog2.ILog log = RLLog2.LogManager.GetFileLogger();
 
         static void Main(string[] args)
         {
