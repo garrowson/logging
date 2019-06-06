@@ -1,21 +1,24 @@
-﻿using System;
+﻿using RPLog2;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RLLog2
+namespace RPLog2
 {
     /// <summary>
     /// Warn-levels of logging
     /// </summary>
     public enum LogLevel
     {
+#pragma warning disable CS1591 // Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element
         Debug,
         Info,
         Warning,
         Error,
         Fatal
+#pragma warning restore CS1591 // Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element
     }
 
     /// <summary>

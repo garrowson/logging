@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RLLog2
+namespace RPLog2
 {
     /// <summary>
     /// Logs informations to a file
