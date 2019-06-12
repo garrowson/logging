@@ -54,6 +54,7 @@ namespace RPLog2
             }
             else
                 return $"(noFormat) {message}{Environment.NewLine}";
+
         }
     }
 }
