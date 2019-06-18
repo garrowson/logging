@@ -43,8 +43,9 @@ namespace RPLog2
         {
             if (!String.IsNullOrEmpty(Format))
             {
+                var dt = DateTime.Now.ToLocalTime();
                 return Format
-                    .Replace("%date", $"{DateTime.Now.Year.ToString("D4")}-{DateTime.Now.Month.ToString("D2")}-{DateTime.Now.Day.ToString("D2")} {DateTime.Now.Hour.ToString("D2")}:{DateTime.Now.Minute.ToString("D2")}:{DateTime.Now.Second.ToString("D2")}.{DateTime.Now.Millisecond.ToString("D3")}")
+                    .Replace("%date", $"{dt.Year.ToString("D4")}-{dt.Month.ToString("D2")}-{dt.Day.ToString("D2")} {dt.Hour.ToString("D2")}:{dt.Minute.ToString("D2")}:{dt.Second.ToString("D2")}.{dt.Millisecond.ToString("D3")}")
                     .Replace("%thread", System.Threading.Thread.CurrentThread.ManagedThreadId.ToString())
                     .Replace("%level", level)
                     .Replace("%class", methodBase.DeclaringType.ToString())
